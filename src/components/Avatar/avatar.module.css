@@ -1,0 +1,23 @@
+/* A magia do display: flex;
+aqui faz com que tudo se alinhe como uma equipe bem treinada. justify-content: flex-end;
+alinha os itens à direita,
+enquanto align-items: center;
+garante que tudo fique no meio verticalmente. O gap: 8px;
+dá um espacinho entre os itens,
+para que não fiquem muito juntinhos,
+e a cor,
+tamanho e estilo da fonte garantem que o nome do usuário seja legível e estiloso. */
+.avatar {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    color: #888888;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 150%;
+}
