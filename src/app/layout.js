@@ -6,6 +6,7 @@ import { Aside } from "@/components/aside";
 
 // Importando o arquivo global de estilos CSS
 import "./globals.css";
+import { SearchForm } from "@/components/SearchForm";
 
 // Metadados da página, usados para configurar informações gerais do site (como título e descrição)
 export const metadata = {
@@ -33,7 +34,10 @@ export default function RootLayout({ children }) {
             <Aside />
           </div>
           {/* Área principal onde o conteúdo filho será renderizado */}
-          <div className="main-content">{children}</div>
+          <div className="main-content">
+            <SearchForm />
+            {children}
+          </div>
         </div>
       </body>
     </html>

@@ -5,63 +5,64 @@ import html from "remark-html"; // Plugin do remark para converter markdown em H
 
 import styles from "./page.module.css"; // Estilos específicos para o componente
 import { CardPost } from "@/components/CardPost"; // Componente CardPost para exibir o post
+import db from "../../../../prisma/db"; // Importa a instância do Prisma para interação com o banco de dados
+import { redirect } from "next/navigation"; // Função de redirecionamento do Next.js
 
-// Função assíncrona para buscar um post do banco de dados ou API usando um slug
+// Função assíncrona para buscar um post do banco de dados usando um slug
 async function getPostBySlug(slug) {
-  // Define a URL de busca com base no slug
-  const url = `http://localhost:3042/posts?slug=${slug}`;
+  try {
+    // Busca o primeiro post que corresponde ao slug fornecido e inclui os dados do autor
+    const post = await db.post.findFirst({
+      include: {
+        author: true,
+      },
+      where: {
+        slug,
+      },
+    });
 
-  // Realiza a requisição à API
-  const response = await fetch(url);
+    // Se o post não for encontrado, lança um erro
+    if (!post) {
+      throw new Error(`Post com slug ${slug} não foi encontrado`);
+    }
 
-  // Caso a requisição falhe, registra um erro e retorna um objeto vazio
-  if (!response.ok) {
-    logger.error("Ops, alguma coisa correu mal");
-    return {};
+    // Processa o conteúdo markdown para HTML usando a biblioteca remark
+    const processedContent = await remark().use(html).process(post.markdown);
+
+    // Converte o conteúdo processado para string HTML
+    const contentHtml = processedContent.toString();
+
+    // Atualiza o conteúdo do post com o HTML gerado
+    post.markdown = contentHtml;
+
+    // Retorna o post com o conteúdo processado
+    return post;
+  } catch (error) {
+    // Registra um erro no logger caso ocorra falha ao obter o post
+    logger.error("Falha ao obter o post com o slug: ", {
+      slug,
+      error,
+    });
   }
 
-  // Se a requisição for bem-sucedida, registra uma mensagem de sucesso
-  logger.info("Posts obtidos com sucesso");
-
-  // Converte a resposta em formato JSON
-  const data = await response.json();
-
-  // Caso o post não seja encontrado, retorna um objeto vazio
-  if (data.length == 0) {
-    return {};
-  }
-
-  // Atribui o primeiro post encontrado à variável 'post'
-  const post = data[0];
-
-  // Processa o conteúdo markdown para HTML usando o remark
-  const processedContent = await remark().use(html).process(post.markdown);
-
-  // Converte o conteúdo processado para string HTML
-  const contentHtml = processedContent.toString();
-
-  // Atualiza o conteúdo markdown com o HTML gerado
-  post.markdown = contentHtml;
-
-  // Retorna o post com o conteúdo HTML processado
-  return post;
+  // Redireciona para a página de "not-found" se ocorrer erro
+  redirect("/not-found");
 }
 
 // Componente da página do post
 const PagePost = async ({ params }) => {
-  // Chama a função para buscar o post pelo slug presente nas 'params'
+  // Obtém o post chamando a função getPostBySlug com o slug da URL
   const post = await getPostBySlug(params.slug);
 
-  // Renderiza a página do post com o CardPost e o conteúdo HTML do markdown
   return (
     <div>
-      {/* Exibe o CardPost com os detalhes do post e destaque ativo */}
+      {/* Exibe o CardPost com os detalhes do post e destaque ativado */}
       <CardPost post={post} highlight />
 
-      {/* Exibe a legenda "Código:" */}
+      {/* Exibe a legenda "Código:" antes do conteúdo do post */}
       <h3 className={styles.subtitle}>Código:</h3>
 
-      {/* Exibe o conteúdo HTML gerado do markdown */}
+      {/* Renderiza o conteúdo HTML do markdown de forma segura */}
       <div className={styles.code}>
         <div dangerouslySetInnerHTML={{ __html: post.markdown }} />
       </div>

@@ -1,0 +1,13 @@
+{"error":{"clientVersion":"6.2.1","code":"P1001","meta":{"database_host":"localhost","database_port":5434,"modelName":"Post"},"name":"PrismaClientKnownRequestError"},"level":"error","message":"Falha ao obter posts"}
+{"error":{"clientVersion":"6.2.1","name":"PrismaClientInitializationError"},"level":"error","message":"Falha ao obter posts"}
+{"error":{"clientVersion":"6.2.1","name":"PrismaClientInitializationError"},"level":"error","message":"Falha ao obter posts"}
+{"error":{},"level":"error","message":"Falha ao obter posts"}
+{"error":{},"level":"error","message":"Falha ao obter posts"}
+{"error":{"clientVersion":"6.2.1","name":"PrismaClientInitializationError"},"level":"error","message":"Falha ao obter posts"}
+{"error":{},"level":"error","message":"Falha ao obter o post com o slug: ","slug":"424"}
+{"error":{"clientVersion":"6.2.1","name":"PrismaClientValidationError"},"level":"error","message":"Falha ao obter posts"}
+{"error":{"clientVersion":"6.2.1","name":"PrismaClientValidationError"},"level":"error","message":"Falha ao obter posts"}
+{"error":{"clientVersion":"6.2.1","name":"PrismaClientInitializationError"},"level":"error","message":"Falha ao obter posts"}
+{"error":{"clientVersion":"6.2.1","name":"PrismaClientInitializationError"},"level":"error","message":"Falha ao obter posts"}
+{"error":{"clientVersion":"6.2.1","name":"PrismaClientInitializationError"},"level":"error","message":"Falha ao obter posts"}
+{"error":{"clientVersion":"6.2.1","name":"PrismaClientInitializationError"},"level":"error","message":"Falha ao obter posts"}

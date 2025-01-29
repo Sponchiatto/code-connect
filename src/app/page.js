@@ -1,45 +1,68 @@
 // Importando o componente CardPost para exibir informações sobre cada post
 import { CardPost } from "@/components/CardPost";
-
-// Importando o logger para registrar mensagens de log
+// Importando o logger para registrar mensagens de erro e depuração
 import logger from "@/logger";
-
 // Importando o arquivo de estilos CSS específico para a página
 import styles from "./page.module.css";
-
 // Importando o componente Link do Next.js para navegação entre páginas
 import Link from "next/link";
+// Importando a conexão com o banco de dados através do Prisma
+import db from "../../prisma/db";
 
-// Função assíncrona para buscar posts a partir de uma página específica
-async function getAllPosts(page) {
+// Função assíncrona para buscar posts a partir de uma página específica, com suporte a pesquisa por título
+async function getAllPosts(page, searchTerm) {
   try {
-    // Realizando a requisição para obter posts, com a paginação de 6 posts por página
-    const response = await fetch(
-      `http://localhost:3042/posts?_page=${page}&_per_page=6`
-    );
+    const where = {}; // Objeto de filtros para a busca no banco de dados
 
-    // Se a resposta da API não for bem-sucedida, gera um erro
-    if (!response.ok) throw new Error("Falha na rede");
+    // Se um termo de pesquisa foi fornecido, filtra os posts pelo título
+    if (searchTerm) {
+      where.title = {
+        contains: searchTerm, // Busca posts que contenham o termo no título
+        mode: "insensitive", // Faz a busca sem diferenciar maiúsculas e minúsculas
+      };
+    }
 
-    // Registrando no log a mensagem de sucesso
-    logger.info("Posts recebidos com sucesso");
+    const perPage = 4; // Define o número de posts por página
+    const skip = (page - 1) * perPage; // Calcula quantos posts devem ser pulados com base na página atual
+    const prev = page > 1 ? page - 1 : null; // Calcula a página anterior (se aplicável)
+    const totalItems = await db.post.count({ where }); // Obtém o número total de posts que correspondem ao filtro
+    const totalPages = Math.ceil(totalItems / perPage); // Calcula o número total de páginas
+    const next = page < totalPages ? page + 1 : null; // Determina se há uma próxima página
 
-    // Retorna os posts em formato JSON
-    return response.json();
+    // Busca os posts da página atual, ordenando do mais recente para o mais antigo
+    const posts = await db.post.findMany({
+      take: perPage, // Limita a quantidade de posts retornados
+      skip, // Define quantos posts devem ser ignorados (para paginação)
+      where, // Aplica os filtros (se houver)
+      orderBy: { createdAt: "desc" }, // Ordena os posts pela data de criação (mais recentes primeiro)
+      include: {
+        author: true, // Inclui os dados do autor no retorno
+      },
+    });
+
+    // Retorna os posts e as informações de paginação
+    return { data: posts, prev, next };
   } catch (error) {
-    // Em caso de erro, registra uma mensagem de erro no log e retorna um array vazio
-    logger.error("Ops, algo correu mal: " + error.message);
-    return [];
+    // Registra um erro caso ocorra alguma falha ao buscar os posts
+    logger.error("Falha ao obter posts", { error });
+
+    // Retorna um objeto vazio e sem links de navegação em caso de erro
+    return { data: [], prev: null, next: null };
   }
 }
 
 // Função que representa a página inicial (Home)
 export default async function Home({ searchParams }) {
-  // Obtendo o número da página a partir dos parâmetros de pesquisa (query parameters)
-  const currentpage = searchParams?.page || 1; // Página padrão é 1 se não houver um parâmetro de página
+  // Obtém o número da página a partir dos parâmetros de pesquisa da URL (query parameters)
+  const currentpage = parseInt(searchParams?.page || 1); // Define a página padrão como 1 caso não seja especificada
+  const searchTerm = searchParams?.q; // Obtém o termo de pesquisa (se houver)
 
-  // Chama a função para obter os posts da página atual e também os links para a página anterior e próxima
-  const { data: posts, prev, next } = await getAllPosts(currentpage);
+  // Busca os posts da página atual e obtém os links para a página anterior e próxima
+  const {
+    data: posts,
+    prev,
+    next,
+  } = await getAllPosts(currentpage, searchTerm);
 
   return (
     // Container principal da página
@@ -49,13 +72,21 @@ export default async function Home({ searchParams }) {
         <CardPost key={post.id} post={post} />
       ))}
 
-      {/* Links para navegação entre as páginas, se existirem */}
+      {/* Links para navegação entre páginas, caso existam */}
       <div className={styles.links}>
         {/* Link para a página anterior, se houver */}
-        {prev && <Link href={`/?page=${prev}`}>Página anterior</Link>}
+        {prev && (
+          <Link href={{ pathname: "/", query: { page: prev, q: searchTerm } }}>
+            Página anterior
+          </Link>
+        )}
 
         {/* Link para a próxima página, se houver */}
-        {next && <Link href={`/?page=${next}`}>Próxima página</Link>}
+        {next && (
+          <Link href={{ pathname: "/", query: { page: next, q: searchTerm } }}>
+            Próxima página
+          </Link>
+        )}
       </div>
     </main>
   );

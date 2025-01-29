@@ -1,49 +1,49 @@
 # Code Connect - Rede Social para Desenvolvedores
 
-**Code Connect** é uma rede social desenvolvida para conectar desenvolvedores de todo o mundo. A plataforma permite que os usuários compartilhem postagens, interajam entre si e acompanhem suas atividades de forma dinâmica.
+**Code Connect** é uma plataforma social criada para conectar desenvolvedores de todo o mundo. A rede permite que os usuários compartilhem postagens, interajam entre si e acompanhem suas atividades de forma dinâmica.
 
 ## Tecnologias Utilizadas
-Este projeto foi desenvolvido utilizando as seguintes tecnologias:
+
+O projeto foi desenvolvido utilizando as seguintes tecnologias:
 
 - **Next.js**: Framework React para construção de aplicações web rápidas e escaláveis com renderização no lado do servidor.
 - **React**: Biblioteca JavaScript para construção de interfaces de usuário interativas.
-- **CSS Modules**: Para gerenciamento eficiente de estilos, proporcionando flexibilidade e um design responsivo.
+- **Tailwind CSS**: Framework CSS utilitário para estilização rápida e responsiva.
+- **Prisma**: ORM para interação com banco de dados.
 - **Winston**: Biblioteca para logging de eventos importantes, como erros e ações do sistema.
-- **Next Image**: Otimização automática de imagens para garantir um carregamento rápido e eficiente.
+- **Next Image**: Otimização automática de imagens para garantir um carregamento eficiente.
 
 ## Funcionalidades Principais
 
 ### 1. **Postagens**
    - Exibição de postagens com título, conteúdo e autor.
-   - Suporte a conteúdo markdown com conversão para HTML, para exibir postagens formatadas corretamente.
-
+   - Suporte a conteúdo em Markdown com conversão para HTML.
+   
 ### 2. **Paginação**
-   - Carregamento dinâmico das postagens com suporte a paginação (exibe 6 postagens por página).
-   - Navegação entre as páginas de postagens com links "Página anterior" e "Próxima página".
+   - Carregamento dinâmico das postagens com suporte a paginação (6 postagens por página).
+   - Navegação entre as páginas de postagens com links "Página Anterior" e "Próxima Página".
 
-### 3. **Perfil de Autor** - Em andamento
+### 3. **Perfil de Autor** *(Em desenvolvimento)*
    - Exibição do avatar e nome do autor ao lado de cada post.
-   - Integração com componente `Avatar` para exibir a imagem de perfil de cada autor.
+   - Integração com componente `Avatar` para exibição da imagem de perfil.
 
-### 4. **Design Responsivo** - Em andamento
-   - Layouts adaptáveis com Tailwind CSS e CSS Modules, garantindo uma experiência de usuário fluída em dispositivos móveis e desktop.
-   - Imagens de capa e outros elementos são ajustados para diferentes tamanhos de tela.
+### 4. **Design Responsivo** *(Em desenvolvimento)*
+   - Layout adaptável utilizando Tailwind CSS.
+   - Imagens e elementos ajustáveis para diferentes tamanhos de tela.
 
 ### 5. **Sistema de Logs**
-   - Sistema de logs robusto utilizando **Winston** para capturar eventos importantes, como erros e sucesso nas requisições.
-   - Logs são registrados em arquivos específicos, como `error.log` e `combined.log`, para facilitar a manutenção e monitoramento do sistema.
+   - Implementação de logs robustos utilizando **Winston**.
+   - Registra eventos e erros em arquivos como `error.log` e `combined.log`.
 
-## Setup e Execução do Projeto
+## Configuração e Execução
 
-### Pré-requisitos
+### Requisitos
 
-Certifique-se de ter os seguintes requisitos instalados:
-
-- **Node.js** (versão 14 ou superior)
+- **Node.js** (14+)
 - **npm** ou **yarn**
-- **Json-server**
+- **PostgreSQL** (ou outro banco de dados suportado pelo Prisma)
 
-### Instalando Dependências
+### Instalação
 
 1. Clone o repositório:
 
@@ -60,9 +60,23 @@ npm install
 yarn install
 ```
 
+3. Configure o banco de dados:
+
+Crie um arquivo `.env` na raiz do projeto e adicione a URL do banco de dados:
+
+```env
+DATABASE_URL="postgresql://usuario:senha@localhost:5432/codeconnect"
+```
+
+4. Execute as migrações do Prisma:
+
+```bash
+npx prisma migrate dev
+```
+
 ### Rodando o Projeto
 
-Para rodar o projeto em modo de desenvolvimento, execute o comando:
+Para iniciar o servidor de desenvolvimento, execute:
 
 ```bash
 npm run dev
@@ -70,28 +84,23 @@ npm run dev
 yarn dev
 ```
 
-Isso iniciará o servidor em `http://localhost:3000`, onde você pode acessar o site.
+O projeto estará disponível em `http://localhost:3000`.
 
-### JSON-Server
-Para mockar a api, o arquivo encontra-se na pasta mocks 
+## Contribuição
 
-```bash
-json-server posts.json -p 3042
-```
+Se quiser contribuir, siga os passos abaixo:
 
-## Contribuições
-Sinta-se à vontade para contribuir com melhorias ou correções. Para isso, siga as etapas abaixo:
-
-1. Faça um fork deste repositório.
+1. Faça um fork do repositório.
 2. Crie uma branch com suas alterações: `git checkout -b minha-alteracao`.
-3. Commit suas mudanças: `git commit -am 'Adicionando uma nova funcionalidade'`.
-4. Faça o push para sua branch: `git push origin minha-alteracao`.
-5. Envie um pull request.
+3. Commit suas mudanças: `git commit -m 'Adicionando nova funcionalidade'`.
+4. Envie para sua branch: `git push origin minha-alteracao`.
+5. Abra um pull request no repositório original.
 
 ## Autor
 
-- **Autor**: [Portfólio](https://portfolio-murex-seven-43.vercel.app/) 
-- **GitHub**: [GitHub](https://github.com/Sponchiatto)
+- **Portfólio**: [Acesse aqui](https://portfolio-murex-seven-43.vercel.app/)
+- **GitHub**: [Perfil no GitHub](https://github.com/Sponchiatto)
 
 ---
+Este README fornece uma visão geral do projeto **Code Connect**, suas funcionalidades e como configurá-lo localmente. Caso tenha dúvidas, fique à vontade para abrir uma issue no repositório!
 
