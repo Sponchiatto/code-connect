@@ -6,6 +6,7 @@ import styles from "./aside.module.css";
 
 // Importando a imagem do logo que será exibida no componente Aside
 import logo from "./logo.png";
+import Link from "next/link";
 
 // Definindo o componente Aside, que será usado para exibir o logo ou outros elementos de navegação
 export const Aside = () => {
@@ -13,7 +14,9 @@ export const Aside = () => {
     // Elemento <aside>, com a classe de estilos específica
     <aside className={styles.aside}>
       {/* Componente Image do Next.js para renderizar a imagem com otimização de desempenho */}
-      <Image src={logo} alt="Logo da Code Connect" />
+      <Link href={"/"}>
+        <Image src={logo} alt="Logo da Code Connect" />
+      </Link>
     </aside>
   );
 };
