@@ -34,7 +34,7 @@ async function getAllPosts(page, searchTerm) {
       take: perPage, // Limita a quantidade de posts retornados
       skip, // Define quantos posts devem ser ignorados (para paginação)
       where, // Aplica os filtros (se houver)
-      orderBy: { createdAt: "desc" }, // Ordena os posts pela data de criação (mais recentes primeiro)
+      orderBy: { id: "desc" }, // Ordena os posts pelo id
       include: {
         author: true, // Inclui os dados do autor no retorno
       },

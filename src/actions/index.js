@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import db from "../../prisma/db";
 
 export async function incrementThumbsUp(post) {
@@ -13,4 +14,8 @@ export async function incrementThumbsUp(post) {
       },
     },
   });
+
+  // Serve para revalidar o caminho, nem caso quando alguém curtir algo
+  revalidatePath("/");
+  revalidatePath(`/${post.slug}`);
 }

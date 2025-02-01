@@ -9,9 +9,17 @@ import styles from "./cardpost.module.css";
 
 // Importando o componente Link do Next.js para navegação entre páginas
 import Link from "next/link";
+import { IconButton } from "../iconButton";
+import { ThumbsUp } from "../icons/ThumbsUp";
+import { incrementThumbsUp } from "@/actions";
 
 // Componente CardPost que exibe informações sobre um post, incluindo título, conteúdo e autor
 export const CardPost = ({ post, highlight }) => {
+
+  // Para fazer com que os dados do form e do post cheguem no arquivo de Thumbs up é usado o método bind
+  // Isso faz com o post chegue devidamente
+  const submitThumbsUp = incrementThumbsUp.bind(null, post);
+
   return (
     // Artigo que representa o post, com largura ajustável dependendo do destaque
     <article className={styles.card} style={{ width: highlight ? 993 : 486 }}>
@@ -36,6 +44,14 @@ export const CardPost = ({ post, highlight }) => {
 
       {/* Rodapé do post, contendo o avatar do autor */}
       <footer className={styles.footer}>
+        <div>
+          <form action={submitThumbsUp}>
+            <IconButton>
+              <ThumbsUp />
+            </IconButton>
+          </form>
+          <p>{post.likes}</p>
+        </div>
         {/* Exibindo o avatar do autor, passando a imagem e o nome */}
         <Avatar imageSrc={post.author.avatar} name={post.author.username} />
       </footer>
