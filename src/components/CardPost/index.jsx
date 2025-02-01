@@ -9,13 +9,11 @@ import styles from "./cardpost.module.css";
 
 // Importando o componente Link do Next.js para navegação entre páginas
 import Link from "next/link";
-import { IconButton } from "../iconButton";
-import { ThumbsUp } from "../icons/ThumbsUp";
 import { incrementThumbsUp } from "@/actions";
+import { ThumbsUpButton } from "./ThumbsUpButton";
 
 // Componente CardPost que exibe informações sobre um post, incluindo título, conteúdo e autor
 export const CardPost = ({ post, highlight }) => {
-
   // Para fazer com que os dados do form e do post cheguem no arquivo de Thumbs up é usado o método bind
   // Isso faz com o post chegue devidamente
   const submitThumbsUp = incrementThumbsUp.bind(null, post);
@@ -46,9 +44,7 @@ export const CardPost = ({ post, highlight }) => {
       <footer className={styles.footer}>
         <div>
           <form action={submitThumbsUp}>
-            <IconButton>
-              <ThumbsUp />
-            </IconButton>
+            <ThumbsUpButton />
           </form>
           <p>{post.likes}</p>
         </div>
