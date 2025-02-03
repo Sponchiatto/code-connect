@@ -37,6 +37,7 @@ async function getAllPosts(page, searchTerm) {
       orderBy: { id: "desc" }, // Ordena os posts pelo id
       include: {
         author: true, // Inclui os dados do autor no retorno
+        comments: true, // Inclui dados do comentário
       },
     });
 

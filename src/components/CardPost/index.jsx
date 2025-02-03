@@ -11,6 +11,7 @@ import styles from "./cardpost.module.css";
 import Link from "next/link";
 import { incrementThumbsUp } from "@/actions";
 import { ThumbsUpButton } from "./ThumbsUpButton";
+import { ModalComment } from "../ModalComment";
 
 // Componente CardPost que exibe informações sobre um post, incluindo título, conteúdo e autor
 export const CardPost = ({ post, highlight }) => {
@@ -45,8 +46,12 @@ export const CardPost = ({ post, highlight }) => {
         <div>
           <form action={submitThumbsUp}>
             <ThumbsUpButton />
+            <p>{post.likes}</p>
           </form>
-          <p>{post.likes}</p>
+          <div>
+            <ModalComment />
+            <p>{post.comments.length}</p>
+          </div>
         </div>
         {/* Exibindo o avatar do autor, passando a imagem e o nome */}
         <Avatar imageSrc={post.author.avatar} name={post.author.username} />
