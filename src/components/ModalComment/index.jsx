@@ -8,9 +8,13 @@ import { IconButton } from "../iconButton";
 import { Chat } from "../icons/Chat";
 // Importando o componente Modal
 import { Modal } from "../Modal";
+import { Subheading } from "../Subheading";
+import { Textarea } from "../TextArea";
+import { SubmitButton } from "../SubmitButton";
+import styles from "./commentmodal.module.css";
 
 // Componente ModalComment, responsável por exibir o ícone de chat que ao ser clicado abre o modal
-export const ModalComment = () => {
+export const ModalComment = ({ action }) => {
   // Criando uma referência para o componente Modal, que será usada para acessar suas funções
   const modalRef = useRef(null);
 
@@ -18,7 +22,18 @@ export const ModalComment = () => {
     <>
       {/* Modal é renderizado, passando a referência `modalRef` para poder controlar sua abertura */}
       <Modal ref={modalRef}>
-        <h1>Olá Mundo</h1> {/* O conteúdo do modal será o título "Olá Mundo" */}
+        <form action={action} onSubmit={() => modalRef.current.closeModal()}>
+          <Subheading>Deixe seu comentário sobre o post:</Subheading>
+          <Textarea
+            required
+            rows={8}
+            name="text"
+            placeholder="Digite aqui..."
+          />
+          <div className={styles.footer}>
+            <SubmitButton>Comentar</SubmitButton>
+          </div>
+        </form>
       </Modal>
 
       {/* IconButton renderiza um botão com o ícone de chat, ao ser clicado abre o modal */}

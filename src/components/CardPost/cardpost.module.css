@@ -57,3 +57,12 @@
     text-decoration: none;
     cursor: pointer;
 }
+
+.actions {
+    display: flex;
+}
+
+.link {
+    text-decoration: none;
+    cursor: pointer;
+}

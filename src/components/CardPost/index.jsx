@@ -9,7 +9,7 @@ import styles from "./cardpost.module.css";
 
 // Importando o componente Link do Next.js para navegação entre páginas
 import Link from "next/link";
-import { incrementThumbsUp } from "@/actions";
+import { incrementThumbsUp, postComment } from "@/actions";
 import { ThumbsUpButton } from "./ThumbsUpButton";
 import { ModalComment } from "../ModalComment";
 
@@ -18,6 +18,7 @@ export const CardPost = ({ post, highlight }) => {
   // Para fazer com que os dados do form e do post cheguem no arquivo de Thumbs up é usado o método bind
   // Isso faz com o post chegue devidamente
   const submitThumbsUp = incrementThumbsUp.bind(null, post);
+  const submitComment = postComment.bind(null, post);
 
   return (
     // Artigo que representa o post, com largura ajustável dependendo do destaque
@@ -49,7 +50,7 @@ export const CardPost = ({ post, highlight }) => {
             <p>{post.likes}</p>
           </form>
           <div>
-            <ModalComment />
+            <ModalComment  action = {submitComment}/>
             <p>{post.comments.length}</p>
           </div>
         </div>
