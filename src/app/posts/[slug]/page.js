@@ -7,18 +7,23 @@ import styles from "./page.module.css"; // Estilos específicos para o component
 import { CardPost } from "@/components/CardPost"; // Componente CardPost para exibir o post
 import db from "../../../../prisma/db"; // Importa a instância do Prisma para interação com o banco de dados
 import { redirect } from "next/navigation"; // Função de redirecionamento do Next.js
+import { CommentList } from "@/components/CommentList";
 
 // Função assíncrona para buscar um post do banco de dados usando um slug
 async function getPostBySlug(slug) {
   try {
     // Busca o primeiro post que corresponde ao slug fornecido e inclui os dados do autor
     const post = await db.post.findFirst({
-      include: {
-        author: true,
-        comments: true
-      },
       where: {
         slug,
+      },
+      include: {
+        author: true,
+        comments: {
+          include: {
+            author: true,
+          },
+        },
       },
     });
 
@@ -67,6 +72,8 @@ const PagePost = async ({ params }) => {
       <div className={styles.code}>
         <div dangerouslySetInnerHTML={{ __html: post.markdown }} />
       </div>
+
+      <CommentList comments={post.comments} />
     </div>
   );
 };
