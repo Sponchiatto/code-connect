@@ -3,10 +3,10 @@
 import { useRef } from "react"; // Hook useRef para criar referências mutáveis para o DOM
 import { Modal } from "../Modal"; // Componente Modal que será utilizado para exibir a caixa de resposta
 import styles from "./replymodal.module.css"; // Estilos CSS para o modal de resposta
-import { Textarea } from "../Textarea"; // Componente de textarea para digitação da resposta
 import { SubmitButton } from "../SubmitButton"; // Botão para submeter a resposta
 import { Comment } from "../Comment"; // Componente para exibir um comentário
 import { postReply } from "@/actions"; // Função para enviar a resposta para o banco de dados
+import { Textarea } from "../TextArea"; // Componente de textarea para digitação da resposta
 
 export const ReplyModal = ({ comment, post }) => {
   // Cria uma referência para o Modal (usado para abrir/fechar)
