@@ -3,6 +3,8 @@
 
 **Code Connect** é uma plataforma social criada para conectar desenvolvedores de todo o mundo. A rede permite que os usuários compartilhem postagens, interajam entre si e acompanhem suas atividades de forma dinâmica.
 
+**Link Vercel**: https://code-connect-blond.vercel.app/
+
 ## Tecnologias Utilizadas
 
 O projeto foi desenvolvido utilizando as seguintes tecnologias:
