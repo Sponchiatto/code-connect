@@ -22,6 +22,14 @@ async function getPostBySlug(slug) {
         comments: {
           include: {
             author: true,
+            children: {
+              include: {
+                author: true,
+              },
+            },
+          },
+          where: {
+            parentId: null,
           },
         },
       },

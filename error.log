@@ -13,3 +13,5 @@
 {"error":{"clientVersion":"6.2.1","name":"PrismaClientInitializationError"},"level":"error","message":"Falha ao obter posts"}
 {"error":{},"level":"error","message":"Falha ao obter posts"}
 {"error":{"clientVersion":"6.3.0","name":"PrismaClientInitializationError"},"level":"error","message":"Falha ao obter posts"}
+{"error":{},"level":"error","message":"Falha ao obter o post com o slug: ","slug":"construindo-spa-com-vuejs"}
+{"error":{},"level":"error","message":"Falha ao obter o post com o slug: ","slug":"construindo-spa-com-vuejs"}

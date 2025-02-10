@@ -3,7 +3,7 @@ import { ReplyModal } from "../ModalReply";
 import { Replies } from "../Replies";
 import styles from "./commentlist.module.css";
 
-export const CommentList = ({ comments = [] }) => {
+export const CommentList = ({ comments }) => {
   if (comments.length === 0) {
     return <p>Nenhum comentário ainda.</p>;
   }
@@ -16,7 +16,7 @@ export const CommentList = ({ comments = [] }) => {
           <li key={comment.id}>
             <Comment comment={comment} />
             <ReplyModal comment={comment} />
-            <Replies />
+            <Replies comment={comment} />
           </li>
         ))}
       </ul>
